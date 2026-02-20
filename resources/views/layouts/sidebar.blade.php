@@ -47,6 +47,17 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="javascript:void(0)" class="nav-link" onclick="togglePdfMenu()">
+                📥 Download PDF
+            </a>
+
+            <ul id="pdfMenu" class="submenu">
+                <li><a href="/pdf-sertifikat">📜 Sertifikat</a></li>
+                <li><a href="/pdf-surat">📄 Surat</a></li>
+                <li><a href="/pdf-buku">📚 Buku</a></li>
+            </ul>
+        </li>
 
     </ul>
 </nav>
