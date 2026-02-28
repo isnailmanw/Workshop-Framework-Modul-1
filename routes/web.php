@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Buku;
+use App\Http\Controllers\TagHargaController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -139,3 +140,11 @@ Route::get('/pdf-surat', function () {
 
     return $pdf->download('surat.pdf');
 });
+
+Route::get('/tagharga', [TagHargaController::class, 'index']);
+Route::get('/tagharga/create', [TagHargaController::class, 'create']);
+Route::post('/tagharga/store', [TagHargaController::class, 'store']);
+Route::get('/tagharga/edit/{id}', [TagHargaController::class, 'edit']);
+Route::post('/tagharga/update/{id}', [TagHargaController::class, 'update']);
+Route::get('/tagharga/delete/{id}', [TagHargaController::class, 'delete']);
+Route::post('/tagharga/cetak', [TagHargaController::class, 'cetak']);

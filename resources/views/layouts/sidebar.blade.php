@@ -55,8 +55,14 @@
             <ul id="pdfMenu" class="submenu">
                 <li><a href="/pdf-sertifikat">📜 Sertifikat</a></li>
                 <li><a href="/pdf-surat">📄 Surat</a></li>
-                <li><a href="/pdf-buku">📚 Buku</a></li>
             </ul>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/tagharga">
+                <span class="menu-title">Tag Harga</span>
+                <i class="mdi mdi-tag menu-icon"></i>
+            </a>
         </li>
 
     </ul>
