@@ -83,7 +83,7 @@ class TagHargaController extends Controller
             compact('data', 'kosong')
         );
 
-        return $pdf->stream('tagharga.pdf');
+        return $pdf->download('tagharga.pdf');
 
     }
 

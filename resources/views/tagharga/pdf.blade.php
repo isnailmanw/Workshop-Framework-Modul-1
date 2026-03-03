@@ -1,7 +1,7 @@
 <style>
     @page {
         size: A4;
-        margin: 8mm 6mm 8mm 8mm;
+        margin: 2mm;
     }
 
     body {
@@ -10,24 +10,21 @@
     }
 
     table {
-        width: 100%;
+        width: auto;
         border-collapse: separate;
-        border-spacing: 2mm 2mm;
+        border-spacing: 3mm 2mm;
     }
 
     td {
+        width: 38mm;
+        height: 18mm;
 
-        width: 36mm;
-        height: 24mm;
-
-        border: 1px solid black;
 
         text-align: center;
-
         vertical-align: middle;
 
-        font-size: 10px;
-
+        font-size: 13px;
+        padding: 0;
     }
 </style>
 
@@ -69,61 +66,24 @@ for ($i = 0; $i < $sisa; $i++) {
     <tr>
 
         <?php
+    for ($j = 0; $j < 5; $j++) {
 
-    $baris = $i / 5;
-
-    /* kalau baris genap → kiri ke kanan */
-    if ($baris % 2 == 0) {
-
-        for ($j = 0; $j < 5; $j++) {
-
-            $index = $i + $j;
+        $index = $i + $j;
 ?>
 
         <td>
 
-            <?php            if ($semua[$index] != "") { ?>
+            <?php        if ($semua[$index] != "") { ?>
 
-            <b><?php                echo $semua[$index]->nama_barang; ?></b>
-
+            <b><?php            echo $semua[$index]->nama_barang; ?></b>
             <br><br>
+            Rp <?php            echo number_format($semua[$index]->harga, 0, ',', '.'); ?>
 
-            Rp <?php                echo $semua[$index]->harga; ?>
-
-            <?php            } ?>
+            <?php        } ?>
 
         </td>
 
-        <?php        }
-
-        /* kalau baris ganjil → kanan ke kiri */
-
-    } else {
-
-        for ($j = 4; $j >= 0; $j--) {
-
-            $index = $i + $j;
-?>
-
-        <td>
-
-            <?php            if ($semua[$index] != "") { ?>
-
-            <b><?php                echo $semua[$index]->nama_barang; ?></b>
-
-            <br><br>
-
-            Rp <?php                echo $semua[$index]->harga; ?>
-
-            <?php            } ?>
-
-        </td>
-
-        <?php        }
-
-    }
-
-?>
+        <?php    } ?>
 
     </tr>
 
