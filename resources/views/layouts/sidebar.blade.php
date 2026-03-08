@@ -65,5 +65,29 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" href="/modul-html">
+                Modul HTML Table
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/modul-datatable">
+                Modul DataTables
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/modul-datatable">
+                Modul DataTables
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/select-kota">
+                Modul Select Kota
+            </a>
+        </li>
+
     </ul>
 </nav>

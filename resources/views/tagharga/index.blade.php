@@ -2,141 +2,159 @@
 
 @section('content')
 
-    <div class="page-header">
-        <h3 class="page-title">
-            Data Tag Harga
-        </h3>
+    <div class="content-wrapper">
+
+        <div class="page-header">
+            <h3 class="page-title">
+                Data Tag Harga
+            </h3>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Daftar Barang</h4>
+
+                <a href="/tagharga/create" class="btn btn-gradient-primary mb-3">
+                    Tambah Data
+                </a>
+
+                <form action="/tagharga/cetak" method="POST">
+                    @csrf
+
+                    <div class="row mb-4">
+
+                        <div class="col-md-2">
+                            <label>Posisi X</label>
+                            <input type="number" name="x" class="form-control" min="1" max="5" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Posisi Y</label>
+                            <input type="number" name="y" class="form-control" min="1" max="8" required>
+                        </div>
+
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-success">
+                                Cetak PDF
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped" id="datatableTagHarga">
+
+                            <thead>
+                                <tr>
+                                    <th>Pilih</th>
+                                    <th>ID Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Harga</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach($data as $d)
+
+                                    <tr class="row-data">
+
+                                        <td>
+                                            <input type="checkbox" name="pilih[]" value="{{ $d->id_barang }}">
+                                        </td>
+
+                                        <td>{{ $d->id_barang }}</td>
+
+                                        <td>{{ $d->nama_barang }}</td>
+
+                                        <td>Rp {{ number_format($d->harga, 0, ',', '.') }}</td>
+
+                                        <td>
+
+                                            <a href="/tagharga/edit/{{ $d->id_barang }}" class="btn btn-warning btn-sm">
+                                                Edit
+                                            </a>
+
+                                            <a href="/tagharga/delete/{{ $d->id_barang }}" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                                Delete
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+
+                                @endforeach
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
     </div>
 
+    {{-- MODAL EDIT --}}
+    <div class="modal fade" id="modalEdit" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-    <div class="card">
-        <div class="card-body">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
+                <div class="modal-body">
 
-            <a href="/tagharga/create" class="btn btn-primary mb-3">
-                Tambah Data
-            </a>
+                    <input type="hidden" id="editId">
 
-
-            <form action="/tagharga/cetak" method="POST">
-
-                @csrf
-
-
-                <div class="row mb-3">
-
-                    <div class="col-md-2">
-
-                        <label>Posisi X</label>
-
-                        <input type="number" name="x" class="form-control" min="1" max="5" required>
-
+                    <div class="form-group mb-3">
+                        <label>Nama Barang</label>
+                        <input type="text" id="editNama" class="form-control" required>
                     </div>
 
-
-                    <div class="col-md-2">
-
-                        <label>Posisi Y</label>
-
-                        <input type="number" name="y" class="form-control" min="1" max="8" required>
-
-                    </div>
-
-
-                    <div class="col-md-3 mt-4">
-
-                        <button class="btn btn-success">
-
-                            Cetak PDF
-
-                        </button>
-
+                    <div class="form-group mb-3">
+                        <label>Harga</label>
+                        <input type="number" id="editHarga" class="form-control" required>
                     </div>
 
                 </div>
 
+                <div class="modal-footer">
 
+                    <button id="btnUbah" class="btn btn-warning">
+                        Ubah
+                    </button>
 
-                <div class="table-responsive">
-
-
-                    <table class="table table-bordered" id="datatableTagHarga">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Pilih</th>
-                                <th>ID Barang</th>
-                                <th>Nama Barang</th>
-                                <th>Harga</th>
-                                <th>Aksi</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                            @foreach($data as $d)
-
-                                <tr>
-
-
-                                    <td>
-
-                                        <input type="checkbox" name="pilih[]" value="{{$d->id_barang}}">
-
-                                    </td>
-
-
-                                    <td>{{$d->id_barang}}</td>
-
-                                    <td>{{$d->nama_barang}}</td>
-
-                                    <td>Rp {{$d->harga}}</td>
-
-
-                                    <td>
-
-                                        <a href="/tagharga/edit/{{$d->id_barang}}" class="btn btn-warning btn-sm">
-
-                                            Edit
-
-                                        </a>
-
-
-                                        <a href="/tagharga/delete/{{$d->id_barang}}" class="btn btn-danger btn-sm">
-
-                                            Delete
-
-                                        </a>
-
-                                    </td>
-
-
-                                </tr>
-
-                            @endforeach
-
-
-                        </tbody>
-
-                    </table>
-
+                    <button id="btnHapus" class="btn btn-danger">
+                        Hapus
+                    </button>
 
                 </div>
 
-            </form>
-
+            </div>
         </div>
     </div>
 
 @endsection
 
 
+
 @section('js-page')
+
+    <style>
+        #datatableTagHarga tbody tr {
+            cursor: pointer;
+        }
+    </style>
 
     <script>
 
@@ -145,7 +163,23 @@
             $('#datatableTagHarga').DataTable({
                 pageLength: 5,
                 lengthMenu: [5, 10, 25, 50],
+                responsive: true
             });
+
+        });
+
+
+        $('.row-data').click(function () {
+
+            let id = $(this).find('td:eq(1)').text();
+            let nama = $(this).find('td:eq(2)').text();
+            let harga = $(this).find('td:eq(3)').text().replace("Rp ", "");
+
+            $('#editId').val(id);
+            $('#editNama').val(nama);
+            $('#editHarga').val(harga);
+
+            $('#modalEdit').modal('show');
 
         });
 

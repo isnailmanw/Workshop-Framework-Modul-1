@@ -148,3 +148,15 @@ Route::get('/tagharga/edit/{id}', [TagHargaController::class, 'edit']);
 Route::post('/tagharga/update/{id}', [TagHargaController::class, 'update']);
 Route::get('/tagharga/delete/{id}', [TagHargaController::class, 'delete']);
 Route::post('/tagharga/cetak', [TagHargaController::class, 'cetak']);
+
+Route::get('/modul-html', function () {
+    return view('modul.table-html');
+});
+
+Route::get('/modul-datatable', function () {
+    return view('modul.table-datatable');
+});
+
+Route::get('/select-kota', function () {
+    return view('modul.select-kota');
+});

@@ -19,7 +19,7 @@
         width: 38mm;
         height: 18mm;
 
-
+6
         text-align: center;
         vertical-align: middle;
 

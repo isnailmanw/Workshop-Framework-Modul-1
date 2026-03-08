@@ -17,10 +17,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
 
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
+
+    <!-- SELECT2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     @yield('style-page')
 
     <style>
-        /* Hover effect sidebar */
         .sidebar .nav-item .nav-link:hover {
             background: linear-gradient(90deg, #cdb0ef, #d7c0ef);
             color: #ffffff !important;
@@ -31,39 +36,50 @@
         .sidebar .nav-item .nav-link:hover i {
             color: #ffffff !important;
         }
+
+        /* Style agar select2 modern */
+
+        .select2-container--default .select2-selection--single {
+            height: 38px;
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 4px 10px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 28px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px;
+        }
+
+        .select2-dropdown {
+            border-radius: 8px;
+        }
     </style>
 
 </head>
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
 
 <body>
 
     <div class="container-scroller">
 
-        {{-- Navbar --}}
         @include('layouts.navbar')
-
 
         <div class="container-fluid page-body-wrapper">
 
-            {{-- Sidebar --}}
             @include('layouts.sidebar')
-
 
             <div class="main-panel">
 
                 <div class="content-wrapper">
 
-                    {{-- Content halaman --}}
                     @yield('content')
 
                 </div>
 
-
-                {{-- Footer --}}
                 @include('layouts.footer')
-
 
             </div>
 
@@ -81,38 +97,29 @@
 
     <script src="{{ asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 
-
-
     <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
-
     <script src="{{ asset('assets/js/misc.js') }}"></script>
-
     <script src="{{ asset('assets/js/settings.js') }}"></script>
-
     <script src="{{ asset('assets/js/todolist.js') }}"></script>
-
     <script src="{{ asset('assets/js/jquery.cookie.js') }}"></script>
-
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
-    <script src="{{ asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
 
+    <script src="{{ asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
-    <!-- jQuery (biasanya sudah ada dari vendor.bundle.base.js) -->
+
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 
-    {{-- JS khusus halaman --}}
+    <!-- SELECT2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     @yield('js-page')
 
-
-
-    {{-- Script tambahan halaman (Datatables, PDF dll) --}}
     @yield('scripts')
-
 
 </body>
 
