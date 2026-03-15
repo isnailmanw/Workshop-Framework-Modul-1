@@ -77,15 +77,54 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="/modul-datatable">
-                Modul DataTables
-            </a>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link" href="/select-kota">
                 Modul Select Kota
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/week4') }}">
+                <span class="menu-title">AJAX Demo</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('wilayah.ajax') }}">
+                Wilayah - AJAX
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('wilayah.axios') }}">
+                Wilayah AXIOS
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('pos.index') }}">
+                POS AJAX
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('penjualan.index') }}">
+                <i class="menu-icon mdi mdi-receipt"></i>
+                <span class="menu-title">Riwayat Penjualan</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('pos.axios') }}">
+                <span class="menu-title">POS Axios</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('penjualan.index') }}">
+                <i class="menu-icon mdi mdi-receipt"></i>
+                <span class="menu-title">Riwayat Penjualan</span>
             </a>
         </li>
 

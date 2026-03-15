@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Buku;
 use App\Http\Controllers\TagHargaController;
+use App\Http\Controllers\WeekEmpat;
+use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\PosController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -160,3 +163,43 @@ Route::get('/modul-datatable', function () {
 Route::get('/select-kota', function () {
     return view('modul.select-kota');
 });
+
+Route::get('/week4', [WeekEmpat::class, 'index']);
+
+Route::post('/ajax-submit', [WeekEmpat::class, 'submit'])
+    ->name('ajax.submit');
+
+Route::get('/wilayah-ajax', [WilayahController::class, 'ajaxPage'])
+    ->name('wilayah.ajax');
+
+Route::get('/wilayah-axios', [WilayahController::class, 'axiosPage'])
+    ->name('wilayah.axios');
+
+Route::get('/wilayah', [WilayahController::class, 'index'])->name('wilayah.index');
+
+Route::post('/get-kabupaten', [WilayahController::class, 'getKabupaten'])->name('wilayah.kabupaten');
+
+Route::post('/get-kecamatan', [WilayahController::class, 'getKecamatan'])->name('wilayah.kecamatan');
+
+Route::post('/get-kelurahan', [WilayahController::class, 'getKelurahan'])->name('wilayah.kelurahan');
+
+Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
+
+Route::post('/get-barang', [PosController::class, 'getBarang'])->name('pos.barang');
+
+Route::post('/tambah-item', [PosController::class, 'tambahItem'])->name('pos.tambah');
+
+Route::post('/bayar', [PosController::class, 'bayar'])->name('pos.bayar');
+
+Route::post('/pos/simpan', [PosController::class, 'simpan'])->name('pos.simpan');
+
+Route::get('/penjualan', [PosController::class, 'riwayat'])->name('penjualan.index');
+Route::get('/penjualan/{id}', [PosController::class, 'detail'])->name('penjualan.detail');
+
+Route::get('/pos-ajax', function () {
+    return view('pos_ajax.index');
+})->name('pos.ajax');
+
+Route::get('/pos-axios', function () {
+    return view('pos_axios.index');
+})->name('pos.axios');
