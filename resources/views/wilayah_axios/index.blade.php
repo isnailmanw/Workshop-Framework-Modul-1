@@ -86,9 +86,7 @@
             const kelurahan = document.getElementById('kelurahan');
 
 
-            /* ==========================
-               PROVINSI → KABUPATEN
-            ========================== */
+        
 
             provinsi.addEventListener('change', function () {
 

@@ -128,5 +128,11 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="/vendor/create" class="nav-link">
+                ➕ Tambah Vendor
+            </a>
+        </li>
+
     </ul>
 </nav>
