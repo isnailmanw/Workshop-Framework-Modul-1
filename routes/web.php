@@ -20,6 +20,7 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\KantinController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -238,3 +239,18 @@ Route::post('/vendor/store', [VendorController::class, 'store']);
 Route::delete('/vendor/{id}', [VendorController::class, 'destroy']);
 Route::get('/vendor/{id}/edit', [VendorController::class, 'edit']);
 Route::put('/vendor/{id}', [VendorController::class, 'update']);
+
+Route::get('/kantin/success/{id}', [KantinController::class, 'success']);
+
+Route::get('/customer', [CustomerController::class, 'index']);
+
+Route::get('/customer/create1', [CustomerController::class, 'create1']);
+Route::post('/customer/store1', [CustomerController::class, 'storeBlob']);
+
+Route::get('/customer/create2', [CustomerController::class, 'create2']);
+Route::post('/customer/store2', [CustomerController::class, 'storeFile']);
+
+Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
+Route::post('/customer/update/{id}', [CustomerController::class, 'update']);
+
+Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);

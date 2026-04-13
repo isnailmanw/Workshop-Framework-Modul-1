@@ -17,12 +17,12 @@ class VendorController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'nama_vendor' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6'
         ]);
+
         // 🔥 1. BUAT USER LOGIN
         $user = User::create([
             'name' => $request->nama_vendor,
@@ -32,12 +32,13 @@ class VendorController extends Controller
         ]);
 
         // 🔥 2. BUAT VENDOR
-        Vendor::create([
-            'nama_vendor' => $request->nama_vendor,
-            'user' => [
-                'role' => 'vendor'
-            ]
+        $vendor = Vendor::create([
+            'nama_vendor' => $request->nama_vendor
         ]);
+
+        // 🔥 3. HUBUNGKAN USER KE VENDOR (INI YANG PENTING)
+        $user->vendor_id = $vendor->id;
+        $user->save();
 
         return redirect('/vendor/create')->with('success', 'Vendor berhasil ditambahkan');
     }

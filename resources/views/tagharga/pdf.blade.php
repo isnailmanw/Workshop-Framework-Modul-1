@@ -18,31 +18,28 @@
     td {
         width: 38mm;
         height: 18mm;
-
-6
         text-align: center;
         vertical-align: middle;
-
         font-size: 13px;
         padding: 0;
     }
 </style>
 
-
 <?php
 
 $total = 40;
 
+// jumlah isi + posisi kosong awal
 $isi = count($data) + $kosong;
 
-$sisa = $total - $isi;
+// pastikan tidak negatif
+$sisa = max(0, $total - $isi);
 
 $semua = [];
 
-
-/* kosong awal */
+/* kosong awal (posisi X,Y) */
 for ($i = 0; $i < $kosong; $i++) {
-    $semua[] = "";
+    $semua[] = null;
 }
 
 /* isi barang */
@@ -52,32 +49,43 @@ foreach ($data as $d) {
 
 /* kosong akhir */
 for ($i = 0; $i < $sisa; $i++) {
-    $semua[] = "";
+    $semua[] = null;
 }
+
+/* pastikan total 40 kotak */
+$semua = array_pad($semua, $total, null);
 
 ?>
 
-
-
 <table>
 
-    <?php for ($i = 0; $i < 40; $i += 5) { ?>
+    <?php for ($i = 0; $i < $total; $i += 5) { ?>
 
     <tr>
 
-        <?php
-    for ($j = 0; $j < 5; $j++) {
+        <?php    for ($j = 0; $j < 5; $j++) {
 
         $index = $i + $j;
 ?>
 
         <td>
 
-            <?php        if ($semua[$index] != "") { ?>
+            <?php        if (!empty($semua[$index])) { ?>
 
-            <b><?php            echo $semua[$index]->nama_barang; ?></b>
-            <br><br>
-            Rp <?php            echo number_format($semua[$index]->harga, 0, ',', '.'); ?>
+            <!-- BARCODE -->
+            <img src="data:image/png;base64,<?= $semua[$index]->barcode ?>" width="120">
+            <br>
+
+            <!-- NAMA (FIX) -->
+            <b><?= $semua[$index]->nama ?></b>
+            <br>
+
+            <!-- HARGA -->
+            Rp <?= number_format($semua[$index]->harga, 0, ',', '.') ?>
+            <br>
+
+            <!-- ID -->
+            <?= $semua[$index]->id ?>
 
             <?php        } ?>
 

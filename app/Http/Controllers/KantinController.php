@@ -12,11 +12,13 @@ use Midtrans\Config;
 use Midtrans\Snap;
 use Midtrans\Transaction;
 
+// 🔥 TAMBAHAN QR CODE (tetap dibiarkan, tidak dihapus)
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 class KantinController extends Controller
 {
     public function index()
     {
-        // 🔥 paksa logout kalau ada user login
         if (Auth::check()) {
             Auth::logout();
         }
@@ -26,7 +28,6 @@ class KantinController extends Controller
         return view('kantin.index', compact('vendors'));
     }
 
-
     public function checkout(Request $request)
     {
         $data = $request->json()->all();
@@ -34,7 +35,6 @@ class KantinController extends Controller
         $items = $data['items'];
         $total = $data['total'];
 
-        // 🔥 ambil order terakhir
         $lastOrder = Order::latest()->first();
 
         if ($lastOrder) {
@@ -67,7 +67,6 @@ class KantinController extends Controller
         ]);
     }
 
-
     public function getMenu($vendor_id)
     {
         $menu = Menu::where('vendor_id', $vendor_id)->get();
@@ -77,8 +76,6 @@ class KantinController extends Controller
     public function bayar(Request $request)
     {
         try {
-            // logic kamu disini
-
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil bayar'
@@ -134,7 +131,6 @@ class KantinController extends Controller
     {
         $order = Order::find($order_id);
 
-        // 🔥 paksa lunas (demo)
         $order->update([
             'status_pembayaran' => 'lunas'
         ]);
@@ -146,14 +142,27 @@ class KantinController extends Controller
 
     public function vendor()
     {
-        $orders = Order::with('details.menu')->latest()->get();
+        $vendor_id = Auth::user()->vendor_id;
+
+        $orders = Order::whereHas('details.menu', function ($q) use ($vendor_id) {
+            $q->where('vendor_id', $vendor_id);
+        })
+            ->with('details.menu')
+            ->latest()
+            ->get();
+
         return view('vendor.index', compact('orders'));
     }
 
     public function vendorLunas()
     {
-        $orders = Order::with('details.menu')
-            ->where('status_pembayaran', 'lunas')
+        $vendor_id = Auth::user()->vendor_id;
+
+        $orders = Order::where('status_pembayaran', 'lunas')
+            ->whereHas('details.menu', function ($q) use ($vendor_id) {
+                $q->where('vendor_id', $vendor_id);
+            })
+            ->with('details.menu')
             ->latest()
             ->get();
 
@@ -175,5 +184,31 @@ class KantinController extends Controller
             'message' => 'updated',
             'id' => $id
         ]);
+    }
+
+    // 🔥 FIX QR CODE (ANTI IMAGICK ERROR)
+    public function success($id)
+    {
+        $order = Order::with('details.menu')->findOrFail($id);
+
+        // 🔥 QR TANPA LIBRARY (PASTI JALAN)
+        $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ORDER-" . $order->id;
+
+        return view('kantin.success', compact('order', 'qrcode'));
+    }
+
+    public function struk($id)
+    {
+        $order = Order::with('details.menu')->findOrFail($id);
+
+        $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
+
+        $barcode = base64_encode(
+            $generator->getBarcode($order->id, $generator::TYPE_CODE_128)
+        );
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('kantin.struk', compact('order', 'barcode'));
+
+        return $pdf->stream('struk.pdf');
     }
 }

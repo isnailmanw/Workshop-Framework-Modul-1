@@ -1,3 +1,4 @@
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
 
@@ -132,6 +133,28 @@
             <a href="/vendor/create" class="nav-link">
                 ➕ Tambah Vendor
             </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#customerMenu" aria-expanded="false">
+                <i class="menu-icon mdi mdi-account"></i>
+                <span class="menu-title">Customer</span>
+                <i class="menu-arrow"></i>
+            </a>
+
+            <div class="collapse" id="customerMenu">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/customer">Data Customer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/customer/create1">Tambah (Blob)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/customer/create2">Tambah (File)</a>
+                    </li>
+                </ul>
+            </div>
         </li>
 
     </ul>

@@ -5,9 +5,7 @@
     <div class="content-wrapper">
 
         <div class="page-header">
-            <h3 class="page-title">
-                Data Tag Harga
-            </h3>
+            <h3 class="page-title">Data Tag Harga</h3>
         </div>
 
         <div class="card">
@@ -60,29 +58,34 @@
 
                                 @foreach($data as $d)
 
-                                    <tr class="row-data">
+                                    <tr>
 
+                                        <!-- ✅ CHECKBOX FIX -->
                                         <td>
-                                            <input type="checkbox" name="pilih[]" value="{{ $d->id_barang }}">
+                                            <input type="checkbox" name="pilih[]" value="{{ $d->id }}">
                                         </td>
 
-                                        <td>{{ $d->id_barang }}</td>
+                                        <td>{{ $d->id }}</td>
 
-                                        <td>{{ $d->nama_barang }}</td>
+                                        <!-- ✅ NAMA BISA DIKLIK -->
+                                        <td>
+                                            <span class="nama-click text-primary" data-id="{{ $d->id }}"
+                                                data-nama="{{ $d->nama }}" data-harga="{{ $d->harga }}" style="cursor:pointer;">
+                                                {{ $d->nama }}
+                                            </span>
+                                        </td>
 
                                         <td>Rp {{ number_format($d->harga, 0, ',', '.') }}</td>
 
                                         <td>
-
-                                            <a href="/tagharga/edit/{{ $d->id_barang }}" class="btn btn-warning btn-sm">
+                                            <a href="/tagharga/edit/{{ $d->id }}" class="btn btn-warning btn-sm">
                                                 Edit
                                             </a>
 
-                                            <a href="/tagharga/delete/{{ $d->id_barang }}" class="btn btn-danger btn-sm"
+                                            <a href="/tagharga/delete/{{ $d->id }}" class="btn btn-danger btn-sm"
                                                 onclick="return confirm('Yakin ingin menghapus data ini?')">
                                                 Delete
                                             </a>
-
                                         </td>
 
                                     </tr>
@@ -102,7 +105,7 @@
 
     </div>
 
-    {{-- MODAL EDIT --}}
+    {{-- MODAL --}}
     <div class="modal fade" id="modalEdit" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -118,26 +121,19 @@
 
                     <div class="form-group mb-3">
                         <label>Nama Barang</label>
-                        <input type="text" id="editNama" class="form-control" required>
+                        <input type="text" id="editNama" class="form-control">
                     </div>
 
                     <div class="form-group mb-3">
                         <label>Harga</label>
-                        <input type="number" id="editHarga" class="form-control" required>
+                        <input type="number" id="editHarga" class="form-control">
                     </div>
 
                 </div>
 
                 <div class="modal-footer">
-
-                    <button id="btnUbah" class="btn btn-warning">
-                        Ubah
-                    </button>
-
-                    <button id="btnHapus" class="btn btn-danger">
-                        Hapus
-                    </button>
-
+                    <button id="btnUbah" class="btn btn-warning">Ubah</button>
+                    <button id="btnHapus" class="btn btn-danger">Hapus</button>
                 </div>
 
             </div>
@@ -147,14 +143,7 @@
 @endsection
 
 
-
 @section('js-page')
-
-    <style>
-        #datatableTagHarga tbody tr {
-            cursor: pointer;
-        }
-    </style>
 
     <script>
 
@@ -166,20 +155,19 @@
                 responsive: true
             });
 
-        });
+            // ✅ CLICK HANYA DI NAMA
+            $('.nama-click').click(function () {
 
+                let id = $(this).data('id');
+                let nama = $(this).data('nama');
+                let harga = $(this).data('harga');
 
-        $('.row-data').click(function () {
+                $('#editId').val(id);
+                $('#editNama').val(nama);
+                $('#editHarga').val(harga);
 
-            let id = $(this).find('td:eq(1)').text();
-            let nama = $(this).find('td:eq(2)').text();
-            let harga = $(this).find('td:eq(3)').text().replace("Rp ", "");
-
-            $('#editId').val(id);
-            $('#editNama').val(nama);
-            $('#editHarga').val(harga);
-
-            $('#modalEdit').modal('show');
+                $('#modalEdit').modal('show');
+            });
 
         });
 

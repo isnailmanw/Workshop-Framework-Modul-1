@@ -6,16 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class TagHarga extends Model
 {
-    protected $table = 'tag_harga';
+    // 🔥 GANTI KE TABEL BARANG
+    protected $table = 'barang';
 
-    protected $primaryKey = 'id_barang';
+    // 🔥 SESUAIKAN DENGAN DATABASE (dari screenshot kamu: id integer)
+    protected $primaryKey = 'id';
 
-    public $incrementing = false;
+    // 🔥 karena id integer auto increment
+    public $incrementing = true;
 
-    protected $keyType = 'string';
+    protected $keyType = 'int';
 
+    // 🔥 kalau tabel barang tidak pakai created_at & updated_at
+    public $timestamps = false;
+
+    // 🔥 SESUAIKAN NAMA FIELD DI DATABASE
     protected $fillable = [
-        'nama_barang',
+        'nama',
         'harga'
     ];
 }

@@ -2,16 +2,87 @@
 
 @section('content')
 
+    <style>
+        :root {
+            --primary: #a78bfa;
+            --primary-dark: #7c3aed;
+            --primary-soft: #ede9fe;
+            --bg: #f9fafb;
+        }
+
+        /* 🔥 BACKGROUND */
+        body {
+            background: var(--bg);
+        }
+
+        /* 🔥 HEADER */
+        .header-box {
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        /* 🔥 CARD */
+        .card {
+            border-radius: 20px !important;
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.08) !important;
+            border: none !important;
+        }
+
+        /* 🔥 INPUT */
+        .form-control,
+        .form-select {
+            border-radius: 12px !important;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2);
+        }
+
+        /* 🔥 BUTTON */
+        .btn-primary {
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* 🔥 TABLE */
+        .table thead {
+            background: #f5f3ff;
+        }
+
+        .table tbody tr:hover {
+            background: #faf5ff;
+        }
+
+        /* 🔥 TOTAL BOX */
+        .total-box {
+            background: #ede9fe;
+            border-radius: 15px;
+        }
+
+        /* 🔥 LOGIN BUTTON */
+        .btn-outline-primary {
+            border-radius: 12px;
+        }
+    </style>
+
     <div class="container py-4">
 
         <!-- HEADER -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="header-box d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h3 class="fw-bold mb-0">🍽️ Kantin Online</h3>
-                <small class="text-muted">Pesan makanan favoritmu dengan mudah</small>
+                <small>Pesan makanan favoritmu dengan mudah</small>
             </div>
 
-            <a href="/login" class="btn btn-outline-primary rounded-3 px-4">
+            <a href="/login" class="btn btn-outline-light rounded-3 px-4">
                 Login
             </a>
         </div>
@@ -25,7 +96,6 @@
 
                         <h5 class="mb-4 fw-semibold">🧾 Pilih Menu</h5>
 
-                        <!-- Vendor -->
                         <div class="mb-3">
                             <label class="form-label fw-medium">Vendor</label>
                             <select id="vendor" class="form-select rounded-3" onchange="loadMenu()">
@@ -36,7 +106,6 @@
                             </select>
                         </div>
 
-                        <!-- Menu -->
                         <div class="mb-3">
                             <label class="form-label fw-medium">Menu</label>
                             <select id="menu" class="form-select rounded-3" onchange="setHarga()">
@@ -44,13 +113,11 @@
                             </select>
                         </div>
 
-                        <!-- Harga -->
                         <div class="mb-3">
                             <label class="form-label fw-medium">Harga</label>
                             <input type="text" id="harga" class="form-control bg-light rounded-3" readonly>
                         </div>
 
-                        <!-- Jumlah -->
                         <div class="mb-4">
                             <label class="form-label fw-medium">Jumlah</label>
                             <input type="number" id="jumlah" class="form-control rounded-3" placeholder="Masukkan jumlah">
@@ -73,7 +140,7 @@
 
                         <div class="table-responsive">
                             <table class="table table-hover align-middle">
-                                <thead class="table-light">
+                                <thead>
                                     <tr>
                                         <th>Menu</th>
                                         <th>Harga</th>
@@ -85,9 +152,9 @@
                             </table>
                         </div>
 
-                        <div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-light rounded-3">
+                        <div class="d-flex justify-content-between align-items-center mt-4 p-3 total-box">
                             <h5 class="mb-0">
-                                Total: <span id="total" class="text-primary fw-bold">Rp 0</span>
+                                Total: <span id="total" class="fw-bold" style="color:#7c3aed;">Rp 0</span>
                             </h5>
 
                             <div>
@@ -144,10 +211,10 @@
 
                 data.forEach(m => {
                     menuSelect.innerHTML += `
-                    <option value="${m.id}">
-                        ${m.nama_menu} - Rp ${m.harga}
-                    </option>
-                `;
+                <option value="${m.id}">
+                    ${m.nama_menu} - Rp ${m.harga}
+                </option>
+            `;
                 });
             });
     }
@@ -188,13 +255,13 @@
             });
 
             let row = `
-            <tr>
-                <td>${menuText}</td>
-                <td>Rp ${harga.toLocaleString()}</td>
-                <td>${jumlah}</td>
-                <td class="fw-semibold text-success">Rp ${subtotal.toLocaleString()}</td>
-            </tr>
-        `;
+        <tr>
+            <td>${menuText}</td>
+            <td>Rp ${harga.toLocaleString()}</td>
+            <td>${jumlah}</td>
+            <td class="fw-semibold text-success">Rp ${subtotal.toLocaleString()}</td>
+        </tr>
+    `;
 
             document.getElementById('tabelBarang').innerHTML += row;
             document.getElementById('total').innerText = "Rp " + total.toLocaleString();
@@ -288,7 +355,10 @@
                         title: 'Pembayaran Berhasil!',
                         text: 'Status: LUNAS 🎉'
                     }).then(() => {
-                        location.reload(); // 🔥 penting biar vendor ikut update
+
+                        // 🔥 INI SATU-SATUNYA PERUBAHAN
+                        window.location.href = '/kantin/success/' + currentOrderId;
+
                     });
 
                 });
@@ -306,7 +376,10 @@
                         title: 'Pembayaran Berhasil!',
                         text: 'Status: LUNAS 🎉'
                     }).then(() => {
-                        location.reload();
+
+                        // 🔥 INI JUGA DIUBAH
+                        window.location.href = '/kantin/success/' + currentOrderId;
+
                     });
 
                 } else if (data.status === 'pending') {
@@ -325,6 +398,19 @@
 
             });
     }
-    
+
     console.log("ORDER ID:", currentOrderId);
+
+</script>
+
+<script>
+    // 🔥 reset keranjang setiap masuk halaman kantin
+    window.onload = function () {
+        if (window.location.href.includes('/kantin')) {
+            if (typeof keranjang !== 'undefined') {
+                keranjang = [];
+                renderKeranjang();
+            }
+        }
+    };
 </script>
