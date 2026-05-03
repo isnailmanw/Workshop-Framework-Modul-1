@@ -54,6 +54,11 @@
             background: linear-gradient(135deg, #f9a8d4, #f472b6);
         }
 
+        /* 🔥 TAMBAHAN UNTUK SCAN */
+        .bg-scan {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+        }
+
         /* 🌸 TEXT */
         .title {
             color: #4c1d95;
@@ -80,7 +85,7 @@
                 <div class="row g-4">
 
                     <!-- 🔥 TAMBAH MENU -->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <a href="/menu/create" class="text-decoration-none">
                             <div class="card border-0 shadow-sm hover-card h-100">
 
@@ -102,7 +107,7 @@
                     </div>
 
                     <!-- 🔥 LIHAT PESANAN -->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <a href="/vendor" class="text-decoration-none">
                             <div class="card border-0 shadow-sm hover-card h-100">
 
@@ -115,6 +120,28 @@
                                     <h5 class="fw-bold text-dark">Lihat Pesanan</h5>
                                     <p class="text-muted mb-0">
                                         Kelola pesanan customer
+                                    </p>
+
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 🔥 🔥 TAMBAHAN: SCAN QR -->
+                    <div class="col-md-4">
+                        <a href="/vendor/scan" class="text-decoration-none">
+                            <div class="card border-0 shadow-sm hover-card h-100">
+
+                                <div class="card-body text-center p-5">
+
+                                    <div class="icon-box bg-scan mb-4">
+                                        📷
+                                    </div>
+
+                                    <h5 class="fw-bold text-dark">Scan QR Pesanan</h5>
+                                    <p class="text-muted mb-0">
+                                        Scan QR dari customer untuk melihat pesanan
                                     </p>
 
                                 </div>

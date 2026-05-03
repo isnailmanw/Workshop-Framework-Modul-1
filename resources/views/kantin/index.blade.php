@@ -10,12 +10,10 @@
             --bg: #f9fafb;
         }
 
-        /* 🔥 BACKGROUND */
         body {
             background: var(--bg);
         }
 
-        /* 🔥 HEADER */
         .header-box {
             background: linear-gradient(135deg, #a78bfa, #7c3aed);
             color: white;
@@ -23,14 +21,12 @@
             border-radius: 20px;
         }
 
-        /* 🔥 CARD */
         .card {
             border-radius: 20px !important;
             box-shadow: 0 10px 25px rgba(124, 58, 237, 0.08) !important;
             border: none !important;
         }
 
-        /* 🔥 INPUT */
         .form-control,
         .form-select {
             border-radius: 12px !important;
@@ -42,7 +38,6 @@
             box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2);
         }
 
-        /* 🔥 BUTTON */
         .btn-primary {
             background: linear-gradient(135deg, #a78bfa, #7c3aed);
             border: none;
@@ -52,7 +47,6 @@
             opacity: 0.9;
         }
 
-        /* 🔥 TABLE */
         .table thead {
             background: #f5f3ff;
         }
@@ -61,13 +55,11 @@
             background: #faf5ff;
         }
 
-        /* 🔥 TOTAL BOX */
         .total-box {
             background: #ede9fe;
             border-radius: 15px;
         }
 
-        /* 🔥 LOGIN BUTTON */
         .btn-outline-primary {
             border-radius: 12px;
         }
@@ -82,9 +74,16 @@
                 <small>Pesan makanan favoritmu dengan mudah</small>
             </div>
 
-            <a href="/login" class="btn btn-outline-light rounded-3 px-4">
-                Login
-            </a>
+            <div>
+                <!-- 🔥 TAMBAHAN (TIDAK MENGHAPUS APAPUN) -->
+                <button onclick="openLastOrder()" class="btn btn-light text-dark me-2">
+                    🔁 Pesanan Terakhir
+                </button>
+
+                <a href="/login" class="btn btn-outline-light rounded-3 px-4">
+                    Login
+                </a>
+            </div>
         </div>
 
         <div class="row g-4">
@@ -177,7 +176,6 @@
 
 @endsection
 
-
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -187,6 +185,17 @@
     let menus = [];
     let keranjang = [];
     let currentOrderId = null;
+
+    // 🔥 TAMBAHAN (AMAN, TIDAK MENGGANGGU)
+    function openLastOrder() {
+        let id = localStorage.getItem("last_order");
+
+        if (id) {
+            window.location.href = "/kantin/success/" + id;
+        } else {
+            Swal.fire('Belum ada pesanan', 'Silakan pesan dulu ya', 'info');
+        }
+    }
 
     function showLoading(text = 'Loading...') {
         Swal.fire({
@@ -261,7 +270,7 @@
             <td>${jumlah}</td>
             <td class="fw-semibold text-success">Rp ${subtotal.toLocaleString()}</td>
         </tr>
-    `;
+        `;
 
             document.getElementById('tabelBarang').innerHTML += row;
             document.getElementById('total').innerText = "Rp " + total.toLocaleString();
@@ -355,10 +364,7 @@
                         title: 'Pembayaran Berhasil!',
                         text: 'Status: LUNAS 🎉'
                     }).then(() => {
-
-                        // 🔥 INI SATU-SATUNYA PERUBAHAN
                         window.location.href = '/kantin/success/' + currentOrderId;
-
                     });
 
                 });
@@ -376,10 +382,7 @@
                         title: 'Pembayaran Berhasil!',
                         text: 'Status: LUNAS 🎉'
                     }).then(() => {
-
-                        // 🔥 INI JUGA DIUBAH
                         window.location.href = '/kantin/success/' + currentOrderId;
-
                     });
 
                 } else if (data.status === 'pending') {
@@ -399,17 +402,13 @@
             });
     }
 
-    console.log("ORDER ID:", currentOrderId);
-
 </script>
 
 <script>
-    // 🔥 reset keranjang setiap masuk halaman kantin
     window.onload = function () {
         if (window.location.href.includes('/kantin')) {
             if (typeof keranjang !== 'undefined') {
                 keranjang = [];
-                renderKeranjang();
             }
         }
     };

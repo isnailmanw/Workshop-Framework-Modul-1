@@ -66,7 +66,7 @@ $semua = array_pad($semua, $total, null);
         <?php    for ($j = 0; $j < 5; $j++) {
 
         $index = $i + $j;
-?>
+        ?>
 
         <td>
 
@@ -76,16 +76,13 @@ $semua = array_pad($semua, $total, null);
             <img src="data:image/png;base64,<?= $semua[$index]->barcode ?>" width="120">
             <br>
 
-            <!-- NAMA (FIX) -->
-            <b><?= $semua[$index]->nama ?></b>
+            <b><?= $semua[$index]->nama ?? '-' ?></b>
             <br>
 
-            <!-- HARGA -->
-            Rp <?= number_format($semua[$index]->harga, 0, ',', '.') ?>
+            Rp <?= number_format($semua[$index]->harga ?? 0, 0, ',', '.') ?>
             <br>
 
-            <!-- ID -->
-            <?= $semua[$index]->id ?>
+            <?= $semua[$index]->kode ?? '-' ?>
 
             <?php        } ?>
 

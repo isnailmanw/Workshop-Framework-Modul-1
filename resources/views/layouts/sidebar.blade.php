@@ -1,4 +1,3 @@
-
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
 
@@ -63,6 +62,13 @@
             <a class="nav-link" href="/tagharga">
                 <span class="menu-title">Tag Harga</span>
                 <i class="mdi mdi-tag menu-icon"></i>
+            </a>
+        </li>
+
+        <li class="nav-item {{ request()->is('scanner/barang') ? 'active' : '' }}">
+            <a class="nav-link" href="/scanner/barang">
+                <i class="ti-camera"></i>
+                <span class="menu-title">Scan Barcode</span>
             </a>
         </li>
 

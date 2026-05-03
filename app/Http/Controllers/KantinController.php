@@ -186,13 +186,13 @@ class KantinController extends Controller
         ]);
     }
 
-    // 🔥 FIX QR CODE (ANTI IMAGICK ERROR)
     public function success($id)
     {
         $order = Order::with('details.menu')->findOrFail($id);
 
-        // 🔥 QR TANPA LIBRARY (PASTI JALAN)
-        $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ORDER-" . $order->id;
+        $url = url('/kantin/success/' . $order->id);
+
+        $qrcode = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . $url;
 
         return view('kantin.success', compact('order', 'qrcode'));
     }
@@ -210,5 +210,16 @@ class KantinController extends Controller
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('kantin.struk', compact('order', 'barcode'));
 
         return $pdf->stream('struk.pdf');
+    }
+
+    public function getOrder($id)
+    {
+        $order = Order::with('details.menu')->find($id);
+
+        if (!$order) {
+            return response()->json(null);
+        }
+
+        return response()->json($order);
     }
 }

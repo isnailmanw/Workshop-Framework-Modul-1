@@ -21,6 +21,8 @@ use App\Http\Controllers\KantinController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ScannerController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -254,3 +256,18 @@ Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
 Route::post('/customer/update/{id}', [CustomerController::class, 'update']);
 
 Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
+
+Route::get('/scanner/barang', [ScannerController::class, 'barang']);
+Route::get('/get-barang/{id}', [ScannerController::class, 'getBarang']);
+Route::get('/barang/{kode}', [ScannerController::class, 'show']);
+Route::get('/scanner/barang', function () {
+    return view('scanner.barang');
+});
+Route::get('/order/{id}', [KantinController::class, 'success']);
+Route::get('/kantin/success/{id}', [KantinController::class, 'success']);
+
+Route::get('/vendor/scan', function () {
+    return view('vendor.scan');
+});
+
+Route::get('/get-order/{id}', [KantinController::class, 'getOrder']);

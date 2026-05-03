@@ -65,11 +65,12 @@ class TagHargaController extends Controller
         $data = TagHarga::whereIn('id', $request->pilih)->get();
 
         // 🔥 GENERATE BARCODE
+
         $generator = new BarcodeGeneratorPNG();
 
         foreach ($data as $d) {
             $d->barcode = base64_encode(
-                $generator->getBarcode($d->id, $generator::TYPE_CODE_128)
+                $generator->getBarcode($d->kode, $generator::TYPE_CODE_128)
             );
         }
 

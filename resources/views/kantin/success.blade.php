@@ -74,7 +74,6 @@
         {{-- 🔥 LIST MENU --}}
         @foreach($order->details as $d)
             <div>
-                {{-- 🔥 FIX AMAN: kalau relasi null tidak error --}}
                 {{ optional($d->menu)->nama ?? optional($d->menu)->nama_menu ?? 'Menu tidak ditemukan' }}
 
                 <div class="row">
@@ -94,14 +93,21 @@
         <hr>
 
         <div class="center">
-            {{-- 🔥 QR CODE (KOTAK) --}}
+            {{-- 🔥 QR CODE --}}
             <img src="{{ $qrcode }}" width="120">
+            <br>
+            <small>Scan untuk melihat pesanan</small>
             <br>
             Terima kasih 🙏
         </div>
 
         <div class="btn">
             <button onclick="printStruk()">🖨 Cetak / Save PDF</button>
+        </div>
+
+        {{-- 🔥 TAMBAHAN: TOMBOL LIHAT PESANAN TERAKHIR --}}
+        <div class="btn">
+            <button onclick="openLastOrder()">🔁 Lihat Pesanan Terakhir</button>
         </div>
 
     </div>
@@ -111,12 +117,26 @@
 </html>
 
 <script>
+    // 🔥 SIMPAN ORDER KE LOCAL STORAGE (INI KUNCI SOAL B)
+    localStorage.setItem("last_order", "{{ $order->id }}");
+
     function printStruk() {
         window.print();
 
-        // 🔥 FIX: redirect setelah print ditutup
+        // 🔥 redirect setelah print
         setTimeout(function () {
             window.location.href = "/kantin";
         }, 1000);
+    }
+
+    // 🔥 FUNGSI BUKA PESANAN TERAKHIR
+    function openLastOrder() {
+        let id = localStorage.getItem("last_order");
+
+        if (id) {
+            window.location.href = "/kantin/success/" + id;
+        } else {
+            alert("Belum ada pesanan tersimpan");
+        }
     }
 </script>
