@@ -66,10 +66,43 @@
         </li>
 
         <li class="nav-item {{ request()->is('scanner/barang') ? 'active' : '' }}">
+
             <a class="nav-link" href="/scanner/barang">
-                <i class="ti-camera"></i>
-                <span class="menu-title">Scan Barcode</span>
+
+                <span class="menu-title">
+                    Scan Barcode
+                </span>
+
+                <i class="mdi mdi-barcode-scan menu-icon"></i>
+
             </a>
+
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/kunjungan-toko">
+
+                <span class="menu-title">
+                    Kunjungan Toko
+                </span>
+
+                <i class="mdi mdi-map-marker-radius menu-icon"></i>
+
+            </a>
+        </li>
+
+        <li class="nav-item {{ request()->is('scan-kunjungan') ? 'active' : '' }}">
+
+            <a class="nav-link" href="/scan-kunjungan">
+
+                <span class="menu-title">
+                    Scan Kunjungan
+                </span>
+
+                <i class="mdi mdi-qrcode-scan menu-icon"></i>
+
+            </a>
+
         </li>
 
         <li class="nav-item">

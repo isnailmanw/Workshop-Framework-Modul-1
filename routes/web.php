@@ -22,6 +22,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ScannerController;
+use App\Http\Controllers\KunjunganController;
 
 
 /*
@@ -271,3 +272,11 @@ Route::get('/vendor/scan', function () {
 });
 
 Route::get('/get-order/{id}', [KantinController::class, 'getOrder']);
+
+
+Route::get('/kunjungan-toko', [KunjunganController::class, 'index']);
+Route::get('/tambah-toko', [KunjunganController::class, 'create']);
+Route::post('/tambah-toko', [KunjunganController::class, 'store']);
+Route::get('/qrcode/{id}', [KunjunganController::class, 'qrcode']);
+Route::get('/api/toko/{barcode}', [KunjunganController::class, 'getToko']);
+Route::get('/scan-kunjungan', [KunjunganController::class, 'scan']);
