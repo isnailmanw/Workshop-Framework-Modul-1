@@ -23,6 +23,9 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ScannerController;
 use App\Http\Controllers\KunjunganController;
+use App\Http\Controllers\AntrianController;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\NfcController;
 
 
 /*
@@ -280,3 +283,75 @@ Route::post('/tambah-toko', [KunjunganController::class, 'store']);
 Route::get('/qrcode/{id}', [KunjunganController::class, 'qrcode']);
 Route::get('/api/toko/{barcode}', [KunjunganController::class, 'getToko']);
 Route::get('/scan-kunjungan', [KunjunganController::class, 'scan']);
+
+
+Route::get('/guest', [AntrianController::class, 'guest']);
+Route::get('/admin-antrian', [AntrianController::class, 'admin']);
+Route::get('/papan-antrian', [AntrianController::class, 'papan']);
+Route::post('/guest-store', [AntrianController::class, 'store'])
+    ->name('guest.store');
+
+Route::get('/stream-antrian', [AntrianController::class, 'stream']);
+Route::post('/panggil-antrian', [AntrianController::class, 'panggil']);
+Route::post('/selesai-antrian/{id}', [AntrianController::class, 'selesai']);
+Route::get('/api/antrian-data', [AntrianController::class, 'realtime']);
+
+Route::get('/nfc', function () {
+    return view('nfc.index');
+});
+Route::post('/save-nfc', [App\Http\Controllers\NfcController::class, 'save']);
+Route::post('/cek-nfc', function (Request $request) {
+
+    $serial = $request->serial_number;
+
+    $card = DB::table('nfc_cards')
+        ->where('serial_number', $serial)
+        ->first();
+
+    return response()->json($card);
+});
+Route::post('/simpan-nfc', function (Request $request) {
+
+    DB::table('nfc_cards')->insert([
+        'serial_number' => $request->serial_number,
+        'nama' => $request->nama,
+        'nim' => $request->nim,
+        'prodi' => $request->prodi,
+    ]);
+
+    return response()->json([
+        'success' => true
+    ]);
+});
+Route::post('/simpan-absensi', function (Illuminate\Http\Request $request) {
+
+    DB::table('absensi')->insert([
+
+        'serial_number' => $request->serial_number,
+        'nama' => $request->nama,
+        'nim' => $request->nim,
+        'prodi' => $request->prodi,
+    ]);
+
+    return response()->json([
+        'success' => true
+    ]);
+});
+Route::get('/riwayat-absensi', function () {
+
+    $data = DB::table('absensi')
+        ->orderBy('id', 'desc')
+        ->limit(10)
+        ->get();
+
+    return response()->json($data);
+});
+Route::post(
+    '/simpan-absensi',
+    [NfcController::class, 'simpanAbsensi']
+);
+
+Route::get(
+    '/riwayat-absensi',
+    [NfcController::class, 'riwayatAbsensi']
+);

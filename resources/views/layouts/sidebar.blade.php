@@ -65,6 +65,23 @@
             </a>
         </li>
 
+
+        <li class="nav-item">
+
+            <a class="nav-link" href="{{ url('/riwayat-absensi') }}">
+
+                <span class="menu-title">
+
+                    Riwayat Absensi
+
+                </span>
+
+                <i class="mdi mdi-history menu-icon"></i>
+
+            </a>
+
+        </li>
+        
         <li class="nav-item {{ request()->is('scanner/barang') ? 'active' : '' }}">
 
             <a class="nav-link" href="/scanner/barang">
